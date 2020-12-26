@@ -12,14 +12,25 @@ local alt = false
 local recording = false
 local settings_mode = false
 local pre_speed = 1
-local last_enc = -1
-local last_enc_time = -1
 local last_arc = -1
 local last_arc_time = -1
 local pop_up_timeout = 1
 local start_time = util.time()
-local filter_options = {"none", "lowpass", "highpass", "bandpass", "band reject"}
-local arc_choices = {"amplitude", "speed", "pan", "cutoff"}
+
+local filter_options = {
+  "none",
+  "lowpass",
+  "highpass",
+  "bandpass",
+  "band reject"
+}
+
+local arc_choices = {
+  "amplitude",
+  "speed",
+  "pan",
+  "cutoff"
+}
 
 
 -- WAVEFORMS
@@ -28,23 +39,28 @@ local waveform_samples = {}
 local scale = 25
 local level = .75
 
+
 function on_render(ch, start, i, s)
   waveform_samples = s
   interval = i
 end
 
+
 function update_content()
   softcut.render_buffer(1, params:get("loop_in"), params:get("loop_out") - params:get("loop_in"), 128)
 end
---/ WAVEFORMS
 
--- for softcut polls
+
+-- softcut polls
 local positions = { -1, -1, -1, -1}
+
+
 local function update_positions(i, pos)
   positions[i] = pos  
 end
 
 
+-- keep everything inside the loop points
 local function set_loop_in(v)
   if params:get("loop_out") == 0.1 then
     v = 0
@@ -74,7 +90,7 @@ local function set_loop_out(v)
   end
 end
 
-
+-- toggle recording
 local function toggle_record()
   local fdbk = params:get("feedback")
   if recording then
@@ -87,7 +103,7 @@ local function toggle_record()
   recording = not recording
 end
 
-
+-- softcut filter mode selection
 local function set_filter_mode(voice, mode)
   if mode == 1 then
     -- none
@@ -127,8 +143,7 @@ local function set_filter_mode(voice, mode)
   end
 end
 
-
--- softcut set up
+-- remaining softcut set up
 local function sc_init()
   audio.level_cut(1.0)
   audio.level_adc_cut(1)
@@ -167,6 +182,8 @@ end
 
 function v_scale(old_value, old_min, old_max, new_min, new_max)
   -- scale ranges
+  -- only used in redraw
+  -- should probably use util.linlin but i couldn't get it to work
   local old_range = old_max - old_min
 
   if old_range == 0 then
@@ -181,10 +198,9 @@ end
 
 
 function init()
-  
   -- init softcut
   sc_init()
-  -- set up softcut polls for posistion
+  -- set up softcut position polls
   for i = 1, 4 do
     softcut.phase_quant(i, .001)
     softcut.event_phase(update_positions)
