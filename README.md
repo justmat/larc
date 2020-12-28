@@ -54,6 +54,8 @@ press **key2** to toggle record head and loop settings.
 * arc ring 4 = loop/window shift
 
 ---
+### to clear the buffer hold **key 1** and press **key 2**
+---
 
 # todo:
 
@@ -61,8 +63,6 @@ in no particular order...
 
 * lfo's
 * screen/arc animation for shifting the loop window
-* some method of clearing the buffer
-* sample loading?
-* extend buffer?
+
 
 </div>
