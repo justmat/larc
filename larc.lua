@@ -276,7 +276,13 @@ end
 -- norns hardware
 function key(n, z)
   if n == 1 then alt = z == 1 and true or false end
-  if n == 2 and z == 1 then settings_mode = not settings_mode end
+  if n == 2 and z == 1 then 
+    if alt then 
+      softcut.buffer_clear()
+    else
+      settings_mode = not settings_mode
+    end
+  end
   if n == 3 and z == 1 then toggle_record() end
 end
 
