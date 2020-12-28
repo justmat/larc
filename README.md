@@ -63,6 +63,8 @@ in no particular order...
 
 * lfo's
 * screen/arc animation for shifting the loop window
+* norns encoder controls for... everything
+
 
 
 </div>
