@@ -166,7 +166,7 @@ local function sc_init()
     softcut.fade_time(i, 0.2)
     softcut.position(i, 0)
     -- filters
-    softcut.filter_dry(i, 1);
+    softcut.filter_dry(i, i == 4 and 1 or 0);
     softcut.filter_fc(i, 1200);
     softcut.filter_lp(i, 0);
     softcut.filter_bp(i, 0);
@@ -254,7 +254,7 @@ function init()
     params:add_control(i .. "filter_q", i .. " filter q", controlspec.new(0.0005, 8.0, 'exp', 0, 8.0, ""))
     params:set_action(i .. "filter_q", function(x) softcut.post_filter_rq(i, x) softcut.pre_filter_rq(i, x) end)
     -- dry signal
-    params:add_control(i .. "dry_signal", i .. " dry signal", controlspec.new(0, 1, 'lin', 0, 1, ""))
+    params:add_control(i .. "dry_signal", i .. " dry signal", controlspec.new(0, 1, 'lin', 0, 0.1, ""))
     params:set_action(i .. "dry_signal", function(x) softcut.pre_filter_dry(i, x) softcut.post_filter_dry(i, x) end)
     
   end
