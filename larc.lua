@@ -9,7 +9,7 @@ local a = arc.connect(1)
 local tau = math.pi * 2
 
 local alt = false
-local recording = false
+local recording = true
 local settings_mode = false
 local pre_speed = 1
 local last_arc = -1
@@ -165,12 +165,6 @@ local function sc_init()
     softcut.loop(i, 1)
     softcut.fade_time(i, 0.2)
     softcut.position(i, 0)
-    -- filters
-    softcut.filter_dry(i, i == 4 and 1 or 0);
-    softcut.filter_fc(i, 1200);
-    softcut.filter_lp(i, 0);
-    softcut.filter_bp(i, 0);
-    softcut.filter_rq(i, 8);
    end
   -- use voice 4 for recording. records at speed == 1, no playback?
   softcut.rec(4, 1)
@@ -225,10 +219,13 @@ function init()
   params:add_option("arc_focus", "arc focus", arc_choices)
   params:hide("arc_focus")
   
+  params:add_trigger("rec_toggle", toggle_record())
+  params:hide("rec_toggle")
+  
   params:add_separator()
   
   for i = 1, 3 do
-    params:add_group("playhead " .. i, 9)
+    params:add_group("playhead " .. i, 8)
     params:add_control(i .. "amp", i .. " amp", controlspec.new(0, 1, "lin", 0, i == 1 and .5 or 0))
     params:set_action(i .. "amp", function(v) softcut.level(i, v) end)
 
@@ -253,9 +250,6 @@ function init()
     -- filter q
     params:add_control(i .. "filter_q", i .. " filter q", controlspec.new(0.0005, 8.0, 'exp', 0, 8.0, ""))
     params:set_action(i .. "filter_q", function(x) softcut.post_filter_rq(i, x) softcut.pre_filter_rq(i, x) end)
-    -- dry signal
-    params:add_control(i .. "dry_signal", i .. " dry signal", controlspec.new(0, 1, 'lin', 0, 0.1, ""))
-    params:set_action(i .. "dry_signal", function(x) softcut.pre_filter_dry(i, x) softcut.post_filter_dry(i, x) end)
     
   end
 
