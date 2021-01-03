@@ -537,11 +537,11 @@ local function draw_amp()
   window(84, 30, 40, 25, " amp 3")
   screen.level(8)
   screen.move(28, 32)
-  screen.text_center(params:get("1amp"))
+  screen.text_center(string.format("%.2f", params:get("1amp")))
   screen.move(60, 51)
-  screen.text_center(params:get("2amp"))
+  screen.text_center(string.format("%.2f", params:get("2amp")))
   screen.move(105, 47)
-  screen.text_center(params:get("3amp"))
+  screen.text_center(string.format("%.2f", params:get("3amp")))
 end
 
 
