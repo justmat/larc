@@ -220,6 +220,12 @@ function lfo.process()
         params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, 10, 12000 ))
       elseif target == 11 then
         -- for rec toggle
+        if lfo[i].slope > 0 then
+          if not togd then
+            toggle_record()
+            togd = true
+          end
+        else togd = false end
       end
     end
   end
