@@ -12,6 +12,7 @@ local tau = math.pi * 2
 local alt = false
 local recording = true
 local settings_mode = false
+local togd = false
 local pre_speed = 1
 local last_arc = -1
 local last_arc_time = -1
@@ -211,7 +212,6 @@ function lfo.process()
     local target = params:get(i .. "lfo_target")
 
     if params:get(i .. "lfo") == 2 then
-      -- amps
       if target >= 2 and target <= 4 then
         params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, 0.0, 1 ))
       elseif target >= 5 and target <= 7 then
@@ -219,9 +219,7 @@ function lfo.process()
       elseif target >= 8 and target <= 10 then
         params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, 10, 12000 ))
       elseif target == 11 then
-        if lfo[i].slope > 0 then
-          toggle_record()
-        end
+        -- for rec toggle
       end
     end
   end
