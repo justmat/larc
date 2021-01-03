@@ -5,6 +5,7 @@
 --
 
 local a = arc.connect(1)
+local lfo = include("lib/larc_hnds")
 
 local tau = math.pi * 2
 
@@ -32,8 +33,22 @@ local arc_choices = {
   "cutoff"
 }
 
+-- for hnds
+local lfo_targets = {
+  "none",
+  "1amp",
+  "2amp",
+  "3amp",
+  "1pan",
+  "2pan",
+  "3pan",
+  "1filter_cutoff",
+  "2filter_cutoff",
+  "3filter_cutoff",
+  "rec toggle"
+}
 
--- WAVEFORMS
+-- WAVEFORM DRAWING
 local interval = 0
 local waveform_samples = {}
 local scale = 25
@@ -191,6 +206,28 @@ function v_scale(old_value, old_min, old_max, new_min, new_max)
 end
 
 
+function lfo.process()
+  for i = 1, 4 do
+    local target = params:get(i .. "lfo_target")
+
+    if params:get(i .. "lfo") == 2 then
+      -- amps
+      if target >= 2 and target <= 4 then
+        params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, 0.0, 1 ))
+      elseif target >= 5 and target <= 7 then
+        params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, -1, 1 ))
+      elseif target >= 8 and target <= 10 then
+        params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, 10, 12000 ))
+      elseif target == 11 then
+        if lfo[i].slope > 0 then
+          toggle_record()
+        end
+      end
+    end
+  end
+end
+
+
 function init()
   -- init softcut
   sc_init()
@@ -252,6 +289,11 @@ function init()
     params:set_action(i .. "filter_q", function(x) softcut.post_filter_rq(i, x) softcut.pre_filter_rq(i, x) end)
     
   end
+  
+  for i = 1, 4 do
+    lfo[i].lfo_targets = lfo_targets
+  end
+  lfo.init()
 
   params:bang()
 
