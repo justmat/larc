@@ -1,5 +1,5 @@
 ![](assets/Untitled-1123.png)
-<div align="center">a norns looper script focused on arc control</div>
+<div align="center">a norns looper script focused on arc control v1.01</div>
 
 
 ---
