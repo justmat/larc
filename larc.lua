@@ -72,7 +72,7 @@ local positions = { -1, -1, -1, -1}
 
 
 local function update_positions(i, pos)
-  positions[i] = pos  
+  positions[i] = pos
 end
 
 
@@ -244,7 +244,7 @@ function init()
   softcut.event_render(on_render)
 
   params:add_separator()
-  
+
   params:add_control('loop_in', 'loop in', controlspec.new(0, 15.5, "lin", 0.01, 0))
   params:set_action('loop_in', function(v) set_loop_in(v) end)
 
@@ -256,15 +256,15 @@ function init()
 
   params:add_control('feedback', 'feedback', controlspec.new(0, 1, "lin", 0.01, .30))
   params:set_action('feedback', function(v) softcut.pre_level(4, v) end)
-  
+
   params:add_option("arc_focus", "arc focus", arc_choices)
   params:hide("arc_focus")
-  
+
   params:add_trigger("rec_toggle", toggle_record())
   params:hide("rec_toggle")
-  
+
   params:add_separator()
-  
+
   for i = 1, 3 do
     params:add_group("playhead " .. i, 8)
     params:add_control(i .. "amp", i .. " amp", controlspec.new(0, 1, "lin", 0, i == 1 and .5 or 0))
@@ -279,7 +279,7 @@ function init()
 
     params:add_control(i .. "pan", i .. " pan", controlspec.new(-1, 1, "lin", 0.01, 0))
     params:set_action(i .. "pan", function(v) softcut.pan(i, v) end)
-    
+
     params:add_control(i .. "pan_slew", i.. " pan slew", controlspec.new(0, 1, "lin", 0.01, 0, ""))
     params:set_action(i .. "pan_slew", function(x) softcut.pan_slew_time(i, x) end)
     -- filter mode
@@ -291,9 +291,9 @@ function init()
     -- filter q
     params:add_control(i .. "filter_q", i .. " filter q", controlspec.new(0.0005, 8.0, 'exp', 0, 8.0, ""))
     params:set_action(i .. "filter_q", function(x) softcut.post_filter_rq(i, x) softcut.pre_filter_rq(i, x) end)
-    
+
   end
-  
+
   for i = 1, 4 do
     lfo[i].lfo_targets = lfo_targets
   end
@@ -316,8 +316,8 @@ end
 -- norns hardware
 function key(n, z)
   if n == 1 then alt = z == 1 and true or false end
-  if n == 2 and z == 1 then 
-    if alt then 
+  if n == 2 and z == 1 then
+    if alt then
       softcut.buffer_clear()
     else
       settings_mode = not settings_mode
@@ -396,7 +396,7 @@ function a.delta(n, d)
         if n <= 3 then
           params:delta(n .. "pan", d)
         elseif n == 4 then
-          
+
         end
       elseif focus == 4 then
         d = d/20
@@ -480,7 +480,7 @@ end
 function arc_redraw()
   a:all(0)
   local focus = params:get("arc_focus")
-  -- rings 1-3: 
+  -- rings 1-3:
   --for i = 1, 3 do
   if alt and not settings_mode then
     arc_draw_amp(false)
@@ -499,9 +499,9 @@ function arc_redraw()
     end
   else
     -- settings mode
-    
+
   end
-  
+
   a:refresh()
 end
 
@@ -527,7 +527,7 @@ local function window(x, y, w, h, header)
   screen.rect(x, y , w - 1 , 8) -- title bar
   screen.fill()
   screen.stroke()
-    
+
   screen.level(0)
   screen.move(x + (w / 2), y + 6)
   screen.text_center(header) -- title
@@ -601,7 +601,7 @@ function redraw()
   screen.font_size(8)
   screen.font_face(0)
   -- top of screen. recording/looping indicator and record head position
-  screen.move (2, 10) -- recording or looping 
+  screen.move (2, 10) -- recording or looping
   screen.text(recording and "R" or "L")
   screen.move(126, 8) -- record head position
   screen.text_right(string.format("%.2f", positions[4]))
@@ -613,7 +613,7 @@ function redraw()
     screen.move(v_scale(0, loop_out - loop_in, 0, 126, x_pos), 35 - height)
     screen.line_rel(0, 2 * height)
     screen.stroke()
-    x_pos = x_pos + 1 
+    x_pos = x_pos + 1
   end
   -- play head positions
   for i = 1, 3 do
