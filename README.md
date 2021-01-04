@@ -61,7 +61,7 @@ press **key2** to toggle record head and loop settings.
 
 in no particular order...
 
-* lfo's
+* ~~lfo's~~
 * screen/arc animation for shifting the loop window
 * norns encoder controls for... everything
 
