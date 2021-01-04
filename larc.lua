@@ -3,6 +3,7 @@
 -- three play heads
 -- arc control
 --
+-- v1.01 @justmat
 
 local a = arc.connect(1)
 local lfo = include("lib/larc_hnds")
