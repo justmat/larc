@@ -281,7 +281,7 @@ function init()
     params:add_control(i .. "pan", i .. " pan", controlspec.new(-1, 1, "lin", 0.01, 0))
     params:set_action(i .. "pan", function(v) softcut.pan(i, v) end)
 
-    params:add_control(i .. "pan_slew", i.. " pan slew", controlspec.new(0, 1, "lin", 0.01, 0, ""))
+    params:add_control(i .. "pan_slew", i.. " pan slew", controlspec.new(0, 1, "lin", 0.01, 0.05, ""))
     params:set_action(i .. "pan_slew", function(x) softcut.pan_slew_time(i, x) end)
     -- filter mode
     params:add_option(i .. "filter_mode", i .. " filter mode", filter_options, 2)
