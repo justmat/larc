@@ -261,8 +261,8 @@ function init()
   params:add_option("arc_focus", "arc focus", arc_choices)
   params:hide("arc_focus")
 
-  params:add_trigger("rec_toggle", toggle_record())
-  params:hide("rec_toggle")
+  params:add_binary("rec_toggle", "rec toggle")
+  params:set_action("rec_toggle", function(v) toggle_record() end)
 
   params:add_separator()
 
