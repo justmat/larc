@@ -216,7 +216,7 @@ function lfo.process()
       if target >= 2 and target <= 4 then
         params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, 0.0, 1 ))
       elseif target >= 5 and target <= 7 then
-        params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, -1, 1 ))
+        params:set(lfo_targets[target], lfo[i].slope)
       elseif target >= 8 and target <= 10 then
         params:set(lfo_targets[target], lfo.scale(lfo[i].slope, -1, 1, 10, 12000 ))
       elseif target == 11 then
